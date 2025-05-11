@@ -1,0 +1,12 @@
+FROM golang:1.21.0
+
+WORKDIR /app
+
+COPY . .
+RUN go mod download
+
+RUN go test .
+
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o myapp main.go parcel.go
+
+CMD [ "/app/myapp" ]
